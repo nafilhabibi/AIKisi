@@ -1,5 +1,5 @@
 {
-  "name": "aikisi-app",
+  "name": "aikisi",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@cerebras/cerebras_cloud_sdk": "^1.64.1",
+    "lucide-react": "^1.17.0",
     "next": "16.2.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "unpdf": "^1.6.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

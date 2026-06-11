@@ -1,26 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap');
 @import "tailwindcss";
 
+/* ===== AIKisi — Neo-Brutalist Editorial (LaporIn style, AIKisi colors) ===== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Core ── */
+  --bg:         #F5F3FF;   /* light lavender (same as LaporIn) */
+  --bg-card:    #ffffff;
+  --bg-dark:    #1A1A2E;   /* dark navy (same as LaporIn) */
+  --text:       #1A1A2E;
+  --muted:      #4A4A68;
+
+  /* ── Brand Accents (AIKisi palette) ── */
+  --coral:      #ED6A5E;
+  --mint:       #4CE0B3;
+  --yellow:     #FFF083;
+
+  /* ── Borders ── */
+  --border:     #e2e2e2;
+  --border-d:   #1A1A2E;   /* thick dark border for bento */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg:       var(--bg);
+  --color-bg-card:  var(--bg-card);
+  --color-bg-dark:  var(--bg-dark);
+  --color-text:     var(--text);
+  --color-muted:    var(--muted);
+  --color-coral:    var(--coral);
+  --color-mint:     var(--mint);
+  --color-yellow:   var(--yellow);
+  --color-border:   var(--border);
+  --font-sans:      'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display:   'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  --font-cursive:   'Caveat', cursive;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* ── Display headings ── */
+h1, h2, h3, h4, h5, h6,
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.font-cursive {
+  font-family: 'Caveat', cursive;
+}
+
+/* ═══════════════════════════════════════
+   NEO-BRUTALIST CARDS
+   ═══════════════════════════════════════ */
+.bento-card {
+  border: 2px solid #1A1A2E;
+  box-shadow: 6px 6px 0px #1A1A2E;
+  border-radius: 16px;
+  transition: all 0.2s ease;
+}
+
+.bento-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px #1A1A2E;
+}
+
+/* ═══════════════════════════════════════
+   BUTTONS (editorial style)
+   ═══════════════════════════════════════ */
+.btn-editorial {
+  border: 2px solid #1A1A2E;
+  box-shadow: 4px 4px 0px #1A1A2E;
+  transition: all 0.2s ease;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.btn-editorial:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px #1A1A2E;
+}
+
+.btn-editorial:active {
+  transform: translate(4px, 4px);
+}
+
+/* ═══════════════════════════════════════
+   HAND-DRAWN EFFECTS
+   ═══════════════════════════════════════ */
+.hand-drawn-border {
+  border: 2px solid #1A1A2E;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+.hand-drawn-border-mint {
+  border: 2px solid #4CE0B3;
+  border-radius: 15px 255px 15px 225px/225px 15px 255px 15px;
+}
+
+/* ═══════════════════════════════════════
+   SCRIBBLE UNDERLINE
+   ═══════════════════════════════════════ */
+.scribble-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.scribble-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0 5 Q 25 0, 50 5 T 100 5' fill='none' stroke='%23FFF083' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: -1;
+}
+
+.scribble-underline-coral::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0 5 Q 25 10, 50 5 T 100 5' fill='none' stroke='%23ED6A5E' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════
+   HOVER LIFT
+   ═══════════════════════════════════════ */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+/* ═══════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════ */
+.display-heading {
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.section-heading {
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.section-num {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════
+   MARQUEE
+   ═══════════════════════════════════════ */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════ */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim-up {
+  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ═══════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+::selection { background: rgba(76, 224, 179, 0.3); color: #1A1A2E; }
