@@ -8,6 +8,10 @@ import {
   Trophy, RefreshCw, Sparkles, ClipboardList, MessageCircle,
 } from "lucide-react";
 import { getMaterial, type MaterialData } from "@/lib/storage";
+import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 
 interface Question {
   question: string;
@@ -36,7 +40,9 @@ export default function LatihanPage() {
         router.push("/materi");
         return;
       }
-      setMaterial(m);
+      setTimeout(() => {
+        setMaterial(m);
+      }, 0);
     }
   }, [id, router]);
 
@@ -73,7 +79,9 @@ export default function LatihanPage() {
 
   useEffect(() => {
     if (material && questions.length === 0 && !loading) {
-      fetchQuiz();
+      setTimeout(() => {
+        fetchQuiz();
+      }, 0);
     }
   }, [material, questions.length, loading, fetchQuiz]);
 
@@ -211,17 +219,33 @@ export default function LatihanPage() {
                     <XCircle className="w-5 h-5 text-coral mt-0.5 flex-shrink-0" />
                   )}
                   <div>
-                    <p className="font-bold text-text text-sm">
-                      {i + 1}. {q.question}
-                    </p>
+                    <div className="font-bold text-text text-sm prose prose-sm max-w-none prose-p:my-0">
+                      <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}>
+                        {`${i + 1}. ${q.question.replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}`}
+                      </ReactMarkdown>
+                    </div>
                     {!isCorrect && (
-                      <p className="text-sm text-muted mt-1">
-                        Jawaban kamu: <span className="font-bold text-coral">{q.options[answers[i]!]}</span>
+                      <div className="text-sm text-muted mt-1 prose prose-sm max-w-none prose-p:my-0">
+                        <span className="mr-1">Jawaban kamu:</span>
+                        <span className="font-bold text-coral inline-block">
+                          <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}>
+                            {q.options[answers[i]!].replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}
+                          </ReactMarkdown>
+                        </span>
                         <br />
-                        Jawaban benar: <span className="font-bold text-green-600">{q.options[q.correctIndex]}</span>
-                      </p>
+                        <span className="mr-1">Jawaban benar:</span>
+                        <span className="font-bold text-green-600 inline-block">
+                          <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}>
+                            {q.options[q.correctIndex].replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}
+                          </ReactMarkdown>
+                        </span>
+                      </div>
                     )}
-                    <p className="text-sm text-muted mt-2 italic">{q.explanation}</p>
+                    <div className="text-sm text-muted mt-2 italic prose prose-sm max-w-none prose-p:my-0">
+                      <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}>
+                        {q.explanation.replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}
+                      </ReactMarkdown>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -273,9 +297,11 @@ export default function LatihanPage() {
 
       {/* Question */}
       <div className="bento-card bg-white p-8 mb-6">
-        <h2 className="text-xl font-bold font-display text-text mb-6 leading-relaxed">
-          {q.question}
-        </h2>
+        <div className="text-xl font-bold font-display text-text mb-6 leading-relaxed prose prose-xl max-w-none prose-p:my-0">
+          <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}>
+            {q.question.replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}
+          </ReactMarkdown>
+        </div>
 
         <div className="space-y-3">
           {q.options.map((opt, idx) => {
@@ -292,15 +318,18 @@ export default function LatihanPage() {
                 key={idx}
                 onClick={() => handleSelect(idx)}
                 disabled={selected !== null}
-                className={`w-full text-left px-5 py-4 rounded-xl font-medium transition-all ${style} ${
-                  selected === null ? "cursor-pointer" : "cursor-default"
-                }`}
+                className={`w-full text-left px-5 py-4 rounded-xl font-medium transition-all ${style} ${selected === null ? "cursor-pointer" : "cursor-default"
+                  }`}
               >
                 <div className="flex items-center gap-3">
                   <span className="w-8 h-8 rounded-lg bg-white border-2 border-bg-dark flex items-center justify-center font-bold text-sm font-display flex-shrink-0">
                     {String.fromCharCode(65 + idx)}
                   </span>
-                  <span className="text-text/80">{opt.replace(/^[A-D][.\)]\s*/, "")}</span>
+                  <div className="text-text/80 prose prose-sm max-w-none prose-p:my-0 flex-1">
+                    <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}>
+                      {opt.replace(/^[A-D][.\)]\s*/, "").replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}
+                    </ReactMarkdown>
+                  </div>
                   {selected !== null && idx === q.correctIndex && (
                     <CheckCircle2 className="w-5 h-5 text-green-600 ml-auto flex-shrink-0" />
                   )}
@@ -321,7 +350,11 @@ export default function LatihanPage() {
             <Sparkles className="w-5 h-5 text-text" />
             <h3 className="font-bold font-display text-text">Pembahasan</h3>
           </div>
-          <p className="text-text/80 leading-relaxed">{q.explanation}</p>
+          <div className="text-text/80 leading-relaxed prose prose-sm max-w-none prose-p:my-0">
+            <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}>
+              {q.explanation.replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$').replace(/\\\]/g, '$$')}
+            </ReactMarkdown>
+          </div>
         </div>
       )}
 

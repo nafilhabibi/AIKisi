@@ -47,23 +47,26 @@ export async function generateSummary(text: string) {
         {
           role: "system",
           content: `Kamu adalah seorang guru ahli yang bertugas membuat rangkuman materi dari teks yang diberikan. 
-Buat rangkuman yang terstruktur dalam Bahasa Indonesia dengan format JSON berikut:
+PENTING: Kamu HARUS membalas dan merangkum sepenuhnya dalam Bahasa Indonesia, meskipun isi materinya berbahasa asing (seperti Bahasa Inggris). 
+PENTING TENTANG FORMAT: JANGAN PERNAH menggunakan tag HTML (seperti <ol>, <li>, <br>). Gunakan HANYA format Markdown murni.
+PENTING UNTUK RUMUS MATEMATIKA: Setiap kali kamu menulis ekspresi matematika, fungsi, bilangan pecahan, rumus, atau persamaan di dalam 'summary', 'keyPoints', atau 'definitions', KAMU WAJIB membungkusnya dengan lambang $ (untuk inline) atau $$ (untuk blok rumus). Contoh: $(f \circ g)(x) = f(g(x))$ atau $f(x) = 2x+2$ atau $y=x$. JANGAN PERNAH membiarkan variabel matematika atau rumus tanpa tanda $. JANGAN gunakan tanda kurung siku \\[ atau \\] untuk rumus, gunakan hanya $$.
+Buat rangkuman terstruktur dengan format JSON berikut:
 {
   "title": "judul materi yang singkat",
-  "summary": "rangkuman menyeluruh dalam 2-3 paragraf",
+  "summary": "rangkuman komprehensif dan sangat mendalam yang menjelaskan seluruh materi secara rinci (minimal 5-7 paragraf)",
   "keyPoints": ["poin penting 1", "poin penting 2", ...],
   "definitions": [{"term": "istilah", "definition": "penjelasan"}],
-  "formulas": ["rumus atau formula jika ada, kosongkan array jika tidak ada"]
+  "formulas": ["rumus atau formula jika ada, KHUSUS UNTUK ARRAY INI pastikan format berupa string LaTeX murni TANPA tanda $ atau $$, kosongkan array jika tidak ada"]
 }
-Pastikan output HANYA JSON valid tanpa markdown atau teks tambahan.`,
+Pastikan output HANYA JSON valid tanpa markdown blok di luar JSON.`,
         },
         {
           role: "user",
-          content: `Buat rangkuman dari materi berikut:\n\n${text.slice(0, 12000)}`,
+          content: `Buat rangkuman dari materi berikut:\n\n${text.slice(0, 80000)}`,
         },
       ],
       temperature: 0.3,
-      max_tokens: 2048,
+      max_tokens: 4096,
     }),
     "generateSummary"
   );
@@ -94,13 +97,16 @@ export async function chatCompletion(
     {
       role: "system" as const,
       content: `Kamu adalah asisten belajar AI bernama AIKisi. Tugasmu adalah menjawab pertanyaan siswa tentang materi yang diberikan. 
-Jawab dalam Bahasa Indonesia yang santai tapi edukatif. Gunakan konteks materi berikut sebagai referensi utama:
+PENTING: Kamu HARUS SELALU menjawab menggunakan Bahasa Indonesia yang santai tapi edukatif, terlepas dari bahasa dokumen materinya. Jika materi berbahasa Inggris, terjemahkan atau jelaskan konsepnya ke dalam Bahasa Indonesia.
+PENTING TENTANG FORMAT: JANGAN PERNAH menggunakan tag HTML (seperti <ol>, <li>, <br>). Gunakan HANYA format Markdown murni (contoh: 1. , 2. , -, *).
+PENTING UNTUK RUMUS MATEMATIKA: Setiap kali kamu menulis fungsi, variabel, rumus, atau persamaan matematika (misalnya (f \circ g)(x) atau f^{-1}(x)), KAMU WAJIB menggunakan format LaTeX yang diapit dengan lambang $ untuk inline (misal: $E=mc^2$) atau $$ untuk blok rumus (misal: $$x = \frac{1}{2}$$). JANGAN PERNAH membiarkan variabel matematika tanpa tanda $. Jangan gunakan tanda kurung seperti \(, \), \\[, atau \\]. Gunakan hanya $ dan $$.
+Gunakan konteks materi berikut sebagai referensi utama:
 
 ---MATERI---
-${context.slice(0, 8000)}
+${context.slice(0, 40000)}
 ---AKHIR MATERI---
 
-Jika pertanyaan di luar konteks materi, tetap jawab dengan ramah tapi ingatkan bahwa kamu paling paham tentang materi yang diberikan.`,
+JIKA PERTANYAAN SAMA SEKALI TIDAK RELEVAN DENGAN MATERI (misalnya bertanya tentang makanan, cuaca, atau topik random lainnya yang tidak ada di dokumen): TOLAK secara halus namun tegas. Beritahu pengguna bahwa kamu adalah asisten belajar khusus materi ini, dan JANGAN berikan jawaban, penjelasan, atau instruksi apapun mengenai topik di luar materi.`,
     },
     ...history.map((m) => ({
       role: m.role as "user" | "assistant",
@@ -132,7 +138,9 @@ export async function generateQuiz(text: string, count: number = 10) {
         {
           role: "system",
           content: `Kamu adalah guru yang membuat soal latihan pilihan ganda. Buat soal berdasarkan materi yang diberikan.
-Format output HARUS JSON array valid tanpa markdown:
+PENTING: Pertanyaan, pilihan jawaban, dan penjelasan HARUS sepenuhnya dalam Bahasa Indonesia, meskipun materi berbahasa asing (seperti Inggris).
+PENTING UNTUK RUMUS MATEMATIKA: Setiap kali kamu menulis fungsi, variabel, rumus, atau persamaan matematika di 'question', 'options', atau 'explanation', KAMU WAJIB membungkusnya dengan lambang $ (untuk inline) atau $$ (untuk blok). Contoh: $(f \circ g)(x)$ atau $f^{-1}(x)$. JANGAN PERNAH membiarkan variabel matematika tanpa tanda $.
+Format output HARUS JSON array valid tanpa markdown blok di luar JSON:
 [
   {
     "question": "pertanyaan",
@@ -146,7 +154,7 @@ Pastikan output HANYA JSON valid tanpa markdown atau teks tambahan.`,
         },
         {
           role: "user",
-          content: `Buat ${count} soal latihan dari materi berikut:\n\n${text.slice(0, 10000)}`,
+          content: `Buat ${count} soal latihan dari materi berikut:\n\n${text.slice(0, 50000)}`,
         },
       ],
       temperature: 0.5,

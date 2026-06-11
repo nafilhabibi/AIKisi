@@ -4,14 +4,15 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FileText, Trash2, Sparkles, Upload, BookOpen } from "lucide-react";
 import { getMaterials, deleteMaterial, type MaterialData } from "@/lib/storage";
-import { useRouter } from "next/navigation";
 
 export default function MateriPage() {
-  const router = useRouter();
   const [materials, setMaterials] = useState<MaterialData[]>([]);
 
   useEffect(() => {
-    setMaterials(getMaterials());
+    const data = getMaterials();
+    setTimeout(() => {
+      setMaterials(data);
+    }, 0);
   }, []);
 
   const handleDelete = (id: string) => {

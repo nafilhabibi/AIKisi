@@ -15,7 +15,10 @@ export default function Home() {
   const [recent, setRecent] = useState<MaterialData[]>([]);
 
   useEffect(() => {
-    setRecent(getMaterials().slice(0, 3));
+    const recentMaterials = getMaterials().slice(0, 3);
+    setTimeout(() => {
+      setRecent(recentMaterials);
+    }, 0);
   }, []);
 
   const processFile = useCallback(

@@ -8,6 +8,11 @@ import {
   Lightbulb, Sigma, Loader2, CheckCircle2,
 } from "lucide-react";
 import { getMaterial, type MaterialData } from "@/lib/storage";
+import katex from "katex";
+import "katex/dist/katex.min.css";
+import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -30,7 +35,9 @@ export default function RangkumanPage() {
         router.push("/materi");
         return;
       }
-      setMaterial(m);
+      setTimeout(() => {
+        setMaterial(m);
+      }, 0);
     }
   }, [id, router]);
 
@@ -163,9 +170,12 @@ export default function RangkumanPage() {
               Rangkuman
             </h2>
             <div className="prose prose-lg max-w-none text-text/80 leading-relaxed">
-              {material.summary.split("\n").map((p, i) => (
-                <p key={i} className="mb-3">{p}</p>
-              ))}
+              <ReactMarkdown
+                remarkPlugins={[remarkMath]}
+                rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}
+              >
+                {material.summary.replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}
+              </ReactMarkdown>
             </div>
           </div>
 
@@ -180,7 +190,14 @@ export default function RangkumanPage() {
                 {material.keyPoints.map((kp, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-text mt-0.5 flex-shrink-0" />
-                    <span className="text-text/80 font-medium">{kp}</span>
+                    <div className="text-text/80 font-medium prose prose-sm max-w-none prose-p:my-0">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkMath]}
+                        rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}
+                      >
+                        {kp.replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}
+                      </ReactMarkdown>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -197,8 +214,16 @@ export default function RangkumanPage() {
               <div className="space-y-4">
                 {material.definitions.map((d, i) => (
                   <div key={i} className="border-l-4 border-mint pl-4">
-                    <h3 className="font-bold text-text font-display">{d.term}</h3>
-                    <p className="text-text/70 text-sm mt-1">{d.definition}</p>
+                    <div className="font-bold text-text font-display prose prose-sm max-w-none prose-p:my-0">
+                      <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}>
+                        {d.term.replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}
+                      </ReactMarkdown>
+                    </div>
+                    <div className="text-text/70 text-sm mt-1 prose prose-sm max-w-none prose-p:my-0">
+                      <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}>
+                        {d.definition.replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}
+                      </ReactMarkdown>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -213,11 +238,21 @@ export default function RangkumanPage() {
                 Rumus & Formula
               </h2>
               <div className="space-y-3">
-                {material.formulas.map((f, i) => (
-                  <div key={i} className="bg-white/80 rounded-xl px-4 py-3 font-mono text-text font-bold border-2 border-bg-dark">
-                    {f}
-                  </div>
-                ))}
+                {material.formulas.map((f, i) => {
+                  let html = f;
+                  try {
+                    html = katex.renderToString(f, { throwOnError: false, displayMode: true });
+                  } catch (e) {
+                    console.error(e);
+                  }
+                  return (
+                    <div 
+                      key={i} 
+                      className="bg-white/80 rounded-xl px-4 py-3 text-text border-2 border-bg-dark overflow-x-auto"
+                      dangerouslySetInnerHTML={{ __html: html }}
+                    />
+                  );
+                })}
               </div>
             </div>
           )}
@@ -296,13 +331,17 @@ export default function RangkumanPage() {
                   >
                     {msg.role === "assistant" && msg.content === "" && streaming ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : msg.role === "assistant" ? (
+                      <div className="prose prose-sm max-w-none">
+                        <ReactMarkdown 
+                          remarkPlugins={[remarkMath]} 
+                          rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}
+                        >
+                          {msg.content.replace(/\\\(/g, '$').replace(/\\\)/g, '$').replace(/\\\[/g, '$$$').replace(/\\\]/g, '$$$')}
+                        </ReactMarkdown>
+                      </div>
                     ) : (
-                      msg.content.split("\n").map((line, j) => (
-                        <span key={j}>
-                          {line}
-                          {j < msg.content.split("\n").length - 1 && <br />}
-                        </span>
-                      ))
+                      <span className="whitespace-pre-wrap">{msg.content}</span>
                     )}
                   </div>
                 </div>
