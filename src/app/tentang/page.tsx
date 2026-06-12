@@ -2,7 +2,18 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "Tentang - AIKisi",
+  title: "Tentang Rangkumify — Platform Belajar AI Gratis untuk Pelajar Indonesia",
+  description:
+    "Pelajari misi Rangkumify: menghadirkan akses belajar berkualitas untuk semua siswa di Indonesia melalui teknologi AI. Gratis, tanpa paywall, tanpa batas.",
+  alternates: {
+    canonical: "https://rangkumify.vercel.app/tentang",
+  },
+  openGraph: {
+    title: "Tentang Rangkumify — AI untuk Semua Pelajar",
+    description:
+      "Misi Rangkumify: pendidikan berkualitas untuk semua. Tanpa paywall, tanpa batas premium.",
+    url: "https://rangkumify.vercel.app/tentang",
+  },
 };
 
 export default function TentangPage() {
@@ -34,7 +45,7 @@ export default function TentangPage() {
       <section className="border-b-2 border-bg-dark bg-bg-dark text-white">
         <div className="max-w-[1000px] mx-auto px-6 py-24 md:py-32 text-center">
           <p className="text-2xl md:text-4xl font-light leading-snug tracking-tight">
-            AIKisi didirikan dengan keyakinan bahwa setiap siswa berhak mendapat bimbingan terbaik. Cukup upload materi dari guru, AI kami akan merangkum, menjelaskan, dan membuat latihan soal — memastikan setiap siswa benar-benar paham.
+            Rangkumify didirikan dengan keyakinan bahwa setiap siswa berhak mendapat bimbingan terbaik. Cukup upload materi dari guru, AI kami akan merangkum, menjelaskan, dan membuat latihan soal — memastikan setiap siswa benar-benar paham.
           </p>
         </div>
       </section>

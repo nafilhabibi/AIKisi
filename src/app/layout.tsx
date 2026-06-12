@@ -2,10 +2,88 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 
+const siteUrl = "https://rangkumify.vercel.app";
+
 export const metadata: Metadata = {
-  title: "AIKisi — Upload Materi, AI yang Ajarin!",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Rangkumify — Upload Materi, AI yang Rangkum & Ajarin!",
+    template: "%s | Rangkumify",
+  },
   description:
-    "Upload PDF materi dari guru, AI akan merangkum, menjelaskan, dan membuat latihan soal secara otomatis. Gratis!",
+    "Rangkumify adalah platform belajar AI gratis. Upload PDF materi dari guru, AI akan merangkum, menjelaskan, membuat latihan soal, dan menjawab pertanyaanmu secara otomatis. Belajar jadi lebih cepat dan efektif!",
+  keywords: [
+    "Rangkumify",
+    "rangkum materi AI",
+    "aplikasi belajar AI",
+    "ringkasan materi otomatis",
+    "latihan soal AI",
+    "chatbot belajar",
+    "upload PDF belajar",
+    "rangkuman otomatis",
+    "belajar dengan AI",
+    "aplikasi belajar gratis",
+    "kisi kisi AI",
+    "AI untuk pelajar",
+    "asisten belajar AI",
+    "generator soal AI",
+  ],
+  authors: [{ name: "Nafil Habibi Mulyadi", url: siteUrl }],
+  creator: "Nafil Habibi Mulyadi",
+  publisher: "Nafil Habibi Mulyadi",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: siteUrl,
+    siteName: "Rangkumify",
+    title: "Rangkumify — Upload Materi, AI yang Rangkum & Ajarin!",
+    description:
+      "Platform belajar AI gratis. Upload PDF, AI rangkum, bikin soal latihan, dan jawab pertanyaanmu. Belajar jadi lebih cepat!",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Rangkumify — Asisten Belajar AI",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@rangkumify",
+    creator: "@rangkumify",
+    title: "Rangkumify — Upload Materi, AI yang Rangkum & Ajarin!",
+    description:
+      "Platform belajar AI gratis. Upload PDF, AI rangkum, bikin soal latihan, dan jawab pertanyaanmu.",
+    images: ["/og-image.png"],
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
+  category: "education",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/manifest.json",
+  verification: {
+    google: "4omiwFtUdBD4Nm-jwNqa49vITBKd-iJwDTlUk0jWVFU", // Isi dengan Google Search Console verification code jika sudah punya
+  },
+  other: {
+    "theme-color": "#4CE0B3",
+  },
 };
 
 const navLinks = [
@@ -27,7 +105,7 @@ export default function RootLayout({
             {/* Logo */}
             <Link href="/" className="flex items-center hover:scale-105 transition-transform origin-left font-display">
               <span className="text-2xl md:text-3xl font-black tracking-tighter uppercase">
-                AIKisi<span className="text-mint">.</span>
+                Rangkumify<span className="text-mint">.</span>
               </span>
             </Link>
 
@@ -76,7 +154,7 @@ export default function RootLayout({
             {/* Brand */}
             <div className="col-span-1 md:col-span-2">
               <h2 className="text-3xl font-black tracking-tighter uppercase font-display mb-6">
-                AIKisi<span className="text-mint">.</span>
+                Rangkumify<span className="text-mint">.</span>
               </h2>
               <p className="text-slate-400 text-base leading-relaxed max-w-sm mb-6 font-medium">
                 Upload materi dari guru, AI yang ajarin. Rangkuman otomatis, chatbot interaktif, dan latihan soal adaptif. 100% gratis.
@@ -131,7 +209,7 @@ export default function RootLayout({
 
           <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-slate-500 text-sm font-medium">
-              &copy; {new Date().getFullYear()} AIKisi. Dibuat oleh anak muda, untuk anak muda.
+              &copy; {new Date().getFullYear()} Rangkumify. Dibuat oleh anak muda, untuk anak muda.
             </p>
             <div className="flex gap-6 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
               <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>

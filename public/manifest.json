@@ -1,0 +1,21 @@
+{
+  "name": "Rangkumify — Asisten Belajar AI",
+  "short_name": "Rangkumify",
+  "description": "Upload PDF materi dari guru, AI akan merangkum, menjelaskan, dan membuat latihan soal secara otomatis. Gratis!",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F0E8",
+  "theme_color": "#4CE0B3",
+  "orientation": "portrait",
+  "lang": "id",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

@@ -11,7 +11,7 @@ export interface MaterialData {
   pageCount?: number;
 }
 
-const STORAGE_KEY = "aikisi_materials";
+const STORAGE_KEY = "rangkumify_materials";
 
 export function getMaterials(): MaterialData[] {
   if (typeof window === "undefined") return [];

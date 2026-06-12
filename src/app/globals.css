@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap');
 @import "tailwindcss";
 
-/* ===== AIKisi — Neo-Brutalist Editorial (LaporIn style, AIKisi colors) ===== */
+/* ===== Rangkumify — Neo-Brutalist Editorial (LaporIn style, Rangkumify colors) ===== */
 
 :root {
   /* ── Core ── */
@@ -11,7 +11,7 @@
   --text:       #1A1A2E;
   --muted:      #4A4A68;
 
-  /* ── Brand Accents (AIKisi palette) ── */
+  /* ── Brand Accents (Rangkumify palette) ── */
   --coral:      #ED6A5E;
   --mint:       #4CE0B3;
   --yellow:     #FFF083;
