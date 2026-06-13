@@ -53,11 +53,11 @@ export const metadata: Metadata = {
       "Platform belajar AI gratis. Upload PDF, AI rangkum, bikin soal latihan, dan jawab pertanyaanmu. Belajar jadi lebih cepat!",
     images: [
       {
-        url: "/og-image.png",
+        url: `${siteUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Rangkumify — Asisten Belajar AI",
-        type: "image/png",
+        type: "image/jpeg",
       },
     ],
   },
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     title: "Rangkumify — Upload Materi, AI yang Rangkum & Ajarin!",
     description:
       "Platform belajar AI gratis. Upload PDF, AI rangkum, bikin soal latihan, dan jawab pertanyaanmu.",
-    images: ["/og-image.png"],
+    images: [`${siteUrl}/og-image.jpg`],
   },
   alternates: {
     canonical: siteUrl,

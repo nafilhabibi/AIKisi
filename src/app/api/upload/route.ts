@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { extractText } from "unpdf";
+import { incrementStats } from "@/lib/stats-server";
 
 export const maxDuration = 60;
 
@@ -29,6 +30,9 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    // ── Track stats ──────────────────────────────────────
+    incrementStats({ pdfsUploaded: 1 }).catch(console.error);
 
     return NextResponse.json({
       text,

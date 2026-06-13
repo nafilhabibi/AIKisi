@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import StatsCounter from "@/components/StatsCounter";
 
 export const metadata = {
   title: "Tentang Rangkumify — Platform Belajar AI Gratis untuk Pelajar Indonesia",
@@ -53,20 +54,7 @@ export default function TentangPage() {
       {/* ══════ STATS ══════ */}
       <section className="py-24 bg-bg relative z-10 border-b-2 border-bg-dark overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-b-2 border-bg-dark pb-16 mb-16">
-            {[
-              { value: "12,400+", label: "Siswa Aktif", color: "text-coral" },
-              { value: "8,500+", label: "Modul AI", color: "text-mint" },
-              { value: "150K+", label: "Soal Generated", color: "text-yellow" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className={`text-[3.5rem] md:text-[4.5rem] font-black font-display leading-none mb-2 ${stat.color}`}>
-                  {stat.value}
-                </div>
-                <div className="text-lg text-muted font-medium uppercase tracking-widest">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          <StatsCounter />
 
           <div className="mb-16">
             <h2 className="text-[3rem] md:text-[4rem] font-black text-text leading-tight max-w-2xl font-display">

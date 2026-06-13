@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { chatCompletion } from "@/lib/cerebras";
+import { incrementStats } from "@/lib/stats-server";
 import type { ChatCompletion } from "@cerebras/cerebras_cloud_sdk/resources/chat";
 
 export const maxDuration = 120;
@@ -21,6 +22,9 @@ export async function POST(req: NextRequest) {
     const readable = new ReadableStream({
       async start(controller) {
         try {
+          // ── Track stats ──────────────────────────────────────
+          incrementStats({ chatSessions: 1 }).catch(console.error);
+
           for await (const rawChunk of stream) {
             const chunk = rawChunk as ChatCompletion.ChatChunkResponse;
             const content = chunk.choices?.[0]?.delta?.content || "";

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateQuiz } from "@/lib/cerebras";
+import { incrementStats } from "@/lib/stats-server";
 
 export const maxDuration = 120;
 
@@ -12,6 +13,11 @@ export async function POST(req: NextRequest) {
     }
 
     const questions = await generateQuiz(text, Math.min(count, 20));
+
+    // ── Track stats ──────────────────────────────────────
+    if (questions.length > 0) {
+      incrementStats({ questionsGenerated: questions.length }).catch(console.error);
+    }
 
     return NextResponse.json({ questions });
   } catch (err) {
