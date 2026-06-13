@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
 const siteUrl = "https://rangkumify.vercel.app";
 
@@ -74,8 +75,15 @@ export const metadata: Metadata = {
   },
   category: "education",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
   },
   manifest: "/manifest.json",
   verification: {
@@ -100,50 +108,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-sans bg-bg text-text antialiased selection:bg-mint/30 selection:text-text">
 
         {/* ── NAVBAR ── */}
-        <nav className="w-full bg-white/70 backdrop-blur-lg border-b-2 border-border sticky top-0 z-50 transition-all duration-300">
-          <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center hover:scale-105 transition-transform origin-left font-display">
-              <span className="text-2xl md:text-3xl font-black tracking-tighter uppercase">
-                Rangkumify<span className="text-mint">.</span>
-              </span>
-            </Link>
-
-            {/* Desktop nav */}
-            <div className="hidden md:flex items-center gap-8 text-[15px] font-bold text-text font-display">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="hover:text-coral transition-colors relative group"
-                >
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-coral transition-all group-hover:w-full" />
-                </Link>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <div className="flex items-center gap-4">
-              <Link
-                href="/materi"
-                className="hidden sm:inline-flex btn-editorial bg-mint text-text px-6 py-2.5 rounded-full text-[15px]"
-              >
-                Materi Saya
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
-
-              {/* Hamburger */}
-              <button className="md:hidden flex items-center text-text focus:outline-none ml-2">
-                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </nav>
+        <Navbar />
 
         {/* ── MAIN ── */}
         <main className="flex-1">{children}</main>
